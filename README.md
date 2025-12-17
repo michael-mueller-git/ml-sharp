@@ -66,7 +66,7 @@ sharp predict -i /path/to/input/images -o /path/to/output/gaussians --render
 sharp render -i /path/to/output/gaussians -o /path/to/output/renderings
 ```
 
-### Using the Docker
+## Using the Docker
 
 We provide a docker image to run the code. You can start the Gradio app using
 
