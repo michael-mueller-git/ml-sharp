@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.9.1-cudnn-devel-ubuntu24.04
+FROM nvidia/cuda:12.8.0-cudnn-devel-ubuntu24.04
 
 # Install Python 3.13
 RUN apt-get update && apt-get install -y wget software-properties-common build-essential && apt-get clean && rm -rf /var/lib/apt/lists/*
