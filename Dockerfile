@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.8.0-cudnn-devel-ubuntu24.04
+FROM nvidia/cuda:12.6.3-cudnn-devel-ubuntu24.04
 
 # Install Python 3.13
 RUN apt-get update && apt-get install -y wget software-properties-common build-essential && apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -11,7 +11,7 @@ COPY pyproject.toml requirements.txt requirements.in /app/
 COPY src/ /app/src/
 WORKDIR /app
 RUN python3.13 -m venv .venv
-ENV TORCH_CUDA_ARCH_LIST="6.0;8.0;8.6;8.7;8.9;9.0+PTX"
+ENV TORCH_CUDA_ARCH_LIST="6.0;8.0"
 ENV FORCE_CUDA="1"
 RUN .venv/bin/pip install ninja
 RUN .venv/bin/pip install -r requirements.txt
