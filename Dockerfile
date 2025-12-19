@@ -11,7 +11,7 @@ COPY pyproject.toml requirements.txt requirements.in /app/
 COPY src/ /app/src/
 WORKDIR /app
 RUN python3.13 -m venv .venv
-ENV TORCH_CUDA_ARCH_LIST="6.0;8.0"
+ENV TORCH_CUDA_ARCH_LIST="6.1;8.0"
 ENV FORCE_CUDA="1"
 RUN .venv/bin/pip install ninja
 RUN .venv/bin/pip install -r requirements.txt
@@ -25,6 +25,9 @@ RUN rm /tmp/test.jpg /tmp/test -rf
 
 # Copy other files
 COPY . /app
+
+RUN .venv/bin/pip uninstall -y torch
+RUN .venv/bin/pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
 
 # Start Gradio web server
 CMD [".venv/bin/python3.13", "-u", "/app/gradio_web.py"]
