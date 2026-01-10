@@ -7,6 +7,8 @@ import time
 import glob
 
 def predict(image):
+    if os.path.exists("/app/data/output"):
+        shutil.rmtree("/app/data/output")
     # Ensure data directory exists
     os.makedirs("/app/data", exist_ok=True)
     
@@ -38,24 +40,19 @@ def predict(image):
         return None
 
     os.system("ls /app/data/output")
+    data = "/app/data/output/input.ply"
 
-    # Find output videos
-    rgb_video = "/app/data/output/input.mp4"
-    depth_video = "/app/data/output/input.depth.mp4"
-    
-    if os.path.exists(rgb_video) and os.path.exists(depth_video):
-        return rgb_video, depth_video
-    elif os.path.exists(rgb_video):
-        return rgb_video, None
+    if os.path.exists(data):
+        return data
         
-    return None, None
+    return None
 
 demo = gr.Interface(
     fn=predict,
     inputs=gr.Image(type="filepath", label="Input Image"),
-    outputs=[gr.Video(label="RGB Video"), gr.Video(label="Depth Video")],
+    outputs=[gr.File(label="ply")],
     title="Sharp 3D View Synthesis",
-    description="Upload an image to generate a 3D view synthesis video."
+    description="Upload an image to generate a 3D view ply."
 )
 
 if __name__ == "__main__":
