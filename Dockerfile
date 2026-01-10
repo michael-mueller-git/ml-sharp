@@ -25,9 +25,10 @@ RUN rm /tmp/test.jpg /tmp/test -rf
 
 RUN .venv/bin/pip uninstall -y torch
 RUN .venv/bin/pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+RUN .venv/bin/pip install -y flask
 
 # Copy other files
 COPY . /app
 
 # Start Gradio web server
-CMD [".venv/bin/python3.13", "-u", "/app/gradio_web.py"]
+CMD [".venv/bin/python3.13", "-u", "/app/webui.py", "--preload"]

@@ -7,6 +7,26 @@ This software project accompanies the research paper: _Sharp Monocular View Synt
 by _Lars Mescheder, Wei Dong, Shiwei Li, Xuyang Bai, Marcel Santos, Peiyun Hu, Bruno Lecouat, Mingmin Zhen, Amaël Delaunoy,
 Tian Fang, Yanghai Tsin, Stephan Richter and Vladlen Koltun_.
 
+## WebUI
+
+This fork includes a browser-based WebUI for generating and viewing 3D Gaussian Splats without using the command line.
+
+![WebUI Screenshot](webui_static/Screenshot.png)
+
+### Features
+
+- **Upload images** directly in your browser
+- **Generate 3D Gaussian Splats** with one click
+- **Interactive 3D viewer** powered by [Spark.js](https://github.com/sparkjsdev/spark) (THREE.js-based renderer)
+- **First-person controls** for exploring your splats:
+  - **W/S** - Move forward/backward
+  - **A/D** - Strafe left/right
+  - **Q/E** - Move up/down
+  - **Mouse drag** - Look around
+  - **Scroll wheel** - Adjust movement speed
+- **Download PLY files** for use in other applications
+- **Network accessible** - Use from any device on your local network
+
 ![](data/teaser.jpg)
 
 We present SHARP, an approach to photorealistic view synthesis from a single image. Given a single photograph, SHARP regresses the parameters of a 3D Gaussian representation of the depicted scene. This is done in less than a second on a standard GPU via a single feedforward pass through a neural network. The 3D Gaussian representation produced by SHARP can then be rendered in real time, yielding high-resolution photorealistic images for nearby views. The representation is metric, with absolute scale, supporting metric camera movements. Experimental results demonstrate that SHARP delivers robust zero-shot generalization across datasets. It sets a new state of the art on multiple datasets, reducing LPIPS by 25–34% and DISTS by 21–43% versus the best prior model, while lowering the synthesis time by three orders of magnitude.
@@ -55,6 +75,30 @@ sharp predict -i /path/to/input/images -o /path/to/output/gaussians -c sharp_257
 
 The results will be 3D gaussian splats (3DGS) in the output folder. The 3DGS `.ply` files are compatible to various public 3DGS renderers. We follow the OpenCV coordinate convention (x right, y down, z forward). The 3DGS scene center is roughly at (0, 0, +z). When dealing with 3rdparty renderers, please scale and rotate to re-center the scene accordingly.
 
+
+### Running the WebUI
+
+1. Install the additional WebUI dependency:
+   ```
+   pip install -r requirements-webui.txt
+   ```
+
+2. Start the WebUI server:
+
+   **Windows:**
+   ```
+   run_webui.bat
+   ```
+
+   **Linux/Mac:**
+   ```
+   ./run_webui.sh
+   ```
+
+3. Open your browser to `http://localhost:7860`
+
+The WebUI will be accessible from other devices on your network at `http://<your-ip>:7860`.
+
 ### Rendering trajectories (CUDA GPU only)
 
 Additionally you can render videos with a camera trajectory. While the gaussians prediction works for all CPU, CUDA, and MPS, rendering videos via the `--render` option currently requires a CUDA GPU. The gsplat renderer takes a while to initialize at the first launch.
@@ -65,17 +109,6 @@ sharp predict -i /path/to/input/images -o /path/to/output/gaussians --render
 # Or from the intermediate gaussians:
 sharp render -i /path/to/output/gaussians -o /path/to/output/renderings
 ```
-
-## Using the Docker
-
-We provide a docker image to run the code. You can start the Gradio app using
-
-```
-docker compose up --build --remove-orphans
-```
-
-The app will be available at `http://localhost:7860`.
-You need to install Docker with CUDA support in order to use the docker image.
 
 ## Evaluation
 

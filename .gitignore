@@ -164,3 +164,15 @@ cython_debug/
 .DS_STORE
 *.pt
 .aider*
+
+# WebUI specific
+input/
+output/
+*.ply
+
+# Claude Code
+.claude/
+
+# Windows artifacts
+nul
+Thumbs.db
