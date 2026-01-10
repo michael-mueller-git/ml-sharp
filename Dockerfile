@@ -26,6 +26,7 @@ RUN rm /tmp/test.jpg /tmp/test -rf
 RUN .venv/bin/pip uninstall -y torch
 RUN .venv/bin/pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
 RUN .venv/bin/pip install -y flask
+RUN .venv/bin/python3.13 -c "import torch;torch.hub.load_state_dict_from_url('https://ml-site.cdn-apple.com/models/sharp/sharp_2572gikvuh.pt')"
 
 # Copy other files
 COPY . /app
