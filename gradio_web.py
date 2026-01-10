@@ -22,7 +22,7 @@ def predict(image):
         "sharp", "predict",
         "-i", input_path,
         "-o", "/app/data/output",
-        "--render"
+        "--no-render"
     ]
     
     # Execute command
@@ -36,6 +36,8 @@ def predict(image):
         print(f"Stdout: {e.stdout.decode()}")
         print(f"Stderr: {e.stderr.decode()}")
         return None
+
+    os.system("ls /app/data/output")
 
     # Find output videos
     rgb_video = "/app/data/output/input.mp4"
