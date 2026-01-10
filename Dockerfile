@@ -32,4 +32,4 @@ RUN .venv/bin/python3.13 -c "import torch;torch.hub.load_state_dict_from_url('ht
 COPY . /app
 
 # Start Gradio web server
-CMD [".venv/bin/python3.13", "-u", "/app/webui.py", "--preload"]
+CMD [".venv/bin/python3.13", "-u", "/app/webui.py", "--preload", "--host", "0.0.0.0"]
