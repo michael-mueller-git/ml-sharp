@@ -23,11 +23,11 @@ RUN wget https://apple.github.io/ml-sharp/thumbnails/Unsplash_-5wkyNA2BPc_0000-0
 RUN sharp predict -i /tmp/test.jpg -o /tmp/test
 RUN rm /tmp/test.jpg /tmp/test -rf
 
-# Copy other files
-COPY . /app
-
 RUN .venv/bin/pip uninstall -y torch
 RUN .venv/bin/pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+
+# Copy other files
+COPY . /app
 
 # Start Gradio web server
 CMD [".venv/bin/python3.13", "-u", "/app/gradio_web.py"]
