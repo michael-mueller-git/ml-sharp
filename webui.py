@@ -149,6 +149,13 @@ def generate():
     if file.filename == "":
         return jsonify({"error": "No file selected"}), 400
 
+    # Read focal length from form field
+    default_focal_length_str = request.form.get("defaultFocalLength", "30")
+    try:
+        default_focal_length = int(default_focal_length_str)
+    except ValueError:
+        return jsonify({"error": "defaultFocalLength must be an integer"}), 400
+
     # Check file extension
     allowed_extensions = {".png", ".jpg", ".jpeg", ".heic", ".heif", ".tiff", ".tif", ".webp"}
     ext = Path(file.filename).suffix.lower()
@@ -167,7 +174,7 @@ def generate():
         LOGGER.info(f"Processing uploaded file: {file.filename}")
 
         # Load the image
-        image, _, f_px = io.load_rgb(tmp_path)
+        image, _, f_px = io.load_rgb(tmp_path, f_35mm=float(default_focal_length))
         height, width = image.shape[:2]
 
         # Get the model

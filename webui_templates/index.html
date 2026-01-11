@@ -419,6 +419,17 @@
                     <p>Drop an image here or click to upload</p>
                     <span class="supported">PNG, JPG, HEIC, TIFF, WebP</span>
                     <input type="file" id="file-input" accept="image/*">
+                    <div class="focal-length-input">
+                      <label for="focal-length">Default focal length (px)</label>
+                      <input
+                        type="number"
+                        id="focal-length"
+                        name="focal-length"
+                        min="1"
+                        step="1"
+                        value="30"
+                      >
+                    </div>
                 </div>
 
                 <div class="preview-container" id="preview-container">
@@ -480,6 +491,7 @@
     <script>
         // Global state
         let selectedFile = null;
+        let defaultFocalLength = 30;
         let currentPlyUrl = null;
         let viewer = null;
 
@@ -501,6 +513,7 @@
         const progressBarFill = document.getElementById('progress-bar-fill');
         const progressBarText = document.getElementById('progress-bar-text');
         const resetCameraBtn = document.getElementById('reset-camera-btn');
+        const focalLengthInput = document.getElementById('focal-length');
 
         // Initialize
         init();
@@ -544,6 +557,11 @@
                 if (viewer) {
                     viewer.resetCamera();
                 }
+            });
+
+            focalLengthInput.addEventListener('input', () => {
+                const val = parseInt(focalLengthInput.value, 10);
+                defaultFocalLength = Number.isNaN(val) ? 30 : val;
             });
         }
 
@@ -597,6 +615,7 @@
             try {
                 const formData = new FormData();
                 formData.append('image', selectedFile);
+                formData.append('defaultFocalLength', defaultFocalLength);
 
                 const response = await fetch('/generate', {
                     method: 'POST',
