@@ -419,22 +419,23 @@
                     <p>Drop an image here or click to upload</p>
                     <span class="supported">PNG, JPG, HEIC, TIFF, WebP</span>
                     <input type="file" id="file-input" accept="image/*">
-                    <div class="focal-length-input">
-                      <label for="focal-length">Default focal length (px)</label>
-                      <input
-                        type="number"
-                        id="focal-length"
-                        name="focal-length"
-                        min="1"
-                        step="1"
-                        value="30"
-                      >
-                    </div>
                 </div>
 
                 <div class="preview-container" id="preview-container">
                     <img id="preview-image" src="" alt="Preview">
                     <div class="preview-info" id="preview-info"></div>
+                </div>
+
+                <div class="focal-length-input">
+                  <label for="focal-length">Default focal lengt (@35mm)</label>
+                  <input
+                    type="number"
+                    id="focal-length"
+                    name="focal-length"
+                    min="1"
+                    step="1"
+                    value="30"
+                  >
                 </div>
 
                 <button class="generate-btn" id="generate-btn" disabled>
